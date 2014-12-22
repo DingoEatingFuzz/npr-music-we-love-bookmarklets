@@ -9,34 +9,38 @@ var files = [
   { name: 'NPR Hate List',  path: 'print-hate-list' },
 ];
 
-Q.all(files.map(function(file) {
+Q.all(files.map(processFile)).then(generateIndex).then(function() {
+  success("Job's finished! Serve this dir to find the bookmarklets");
+});
+
+
+
+function processFile(file) {
   var d = Q.defer();
   fs.readFile(file.path + '.js', 'utf-8', function(err, res) {
-    if (err) {
-      failure('Could not read in ' + file + '.js');
-    } else {
-      d.resolve({
-        name: file.name,
-        code: convert(res)
-      });
-    }
+    if (err) failure('Could not read in ' + file + '.js');
+
+    d.resolve({
+      name: file.name,
+      code: convert(res)
+    });
   });
   return d.promise;
-})).then(function(bookmarklets) {
+}
+
+function generateIndex(bookmarklets) {
+  var d = Q.defer();
   fs.readFile('index.mst', 'utf-8', function(err, res) {
-    if (err) {
-      failure('Could not read in index.mst');
-    } else {
-      fs.writeFile('index.html', mustache.render(res, { bookmarklets: bookmarklets }), function(err) {
-        if (err) {
-          failure('Could not write index.html');
-        } else {
-          success("Job's finished! Serve this dir to find the bookmarklets");
-        }
-      });
-    }
+    if (err) failure('Could not read in index.mst');
+
+    fs.writeFile('index.html', mustache.render(res, { bookmarklets: bookmarklets }), function(err) {
+      if (err) failure('Could not write index.html');
+
+      d.resolve();
+    });
   });
-});
+  return d.promise;
+}
 
 function failure(msg) {
   console.log(msg);
