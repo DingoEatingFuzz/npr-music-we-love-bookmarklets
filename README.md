@@ -1,6 +1,6 @@
 ## NPR Music We Love 2014 Bookmarklets
 
-So NPR did this fantastic thing this year. You can find the link at the bottom of this readme, 
+So NPR did this fantastic thing this year. You can find the link at the bottom of this readme,
 but the gist of it is they put together a list of 302 songs they loved over the course of the year
 and kind of made a game out of it (with a beautiful web app to boot).
 
@@ -18,3 +18,11 @@ If you aren't from a hundred years ago, and you don't know how to use a bookmark
 2. Click them when appropriate on the npr music we loved webapp
 
 And lastly, the link to the npr site: http://apps.npr.org/best-songs-2014/
+
+### Building
+
+Just this one command
+
+```sh
+node index.js
+```
