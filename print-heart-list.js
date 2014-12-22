@@ -1,10 +1,16 @@
-javascript:(function() {
-  var panels = $('.save-list');
-  if (panels.length) {
-    panels.remove();
-    return;
-  }
+var panels = $('.save-list');
 
+if (panels.length) {
+  removePanel();
+} else {
+  showPanel();
+}
+
+function removePanel() {
+  panels.remove();
+}
+
+function showPanel() {
   var ls = window.localStorage;
 
   var heartTracks = JSON.parse(ls.getItem('heart-tracks') || '{}');
@@ -52,49 +58,49 @@ javascript:(function() {
     overflow : 'auto'
   };
 
-  var heartPanel = $('<div class=\'heart-list save-list\'>')
+  var heartPanel = $("<div class='heart-list save-list'>")
     .html(heartPanelContent)
     .css(positioningCSS)
     .css('left', 0)
     .appendTo('body');
 
-  function values(obj) {
-    return function(key) {
-      return obj[key];
-    };
-  }
-
-  function template(fn) {
-    return fn.toString().replace(/\n/g, '').match(/\/\*(.*?)\*\//)[1];
-  }
-
   function compileTrack(track) {
     return templateCompile(trackTemplate, track);
   }
+}
 
-  function templateCompile(template, props) {
-    /* handle conditionals */
-    template = template.replace(/\[(.+?)\?(.*?)\]/g, function(str, prop, tmpl) {
-      return getProp(props, prop) ? tmpl : '';
-    });
-    /* handle substitutions */
-    template = template.replace(/\{(.+?)\}/g, function(str, prop) {
-      return getProp(props, prop);
-    });
-    return template;
-  }
+function values(obj) {
+  return function(key) {
+    return obj[key];
+  };
+}
 
-  function getProp(obj, prop) {
-    var propChain = prop.split('.');
-    var val = obj;
-    for (var i = 0, len = propChain.length; i < len; i++) {
-      var newVal = val[propChain[i]];
-      if (newVal) {
-        val = val[propChain[i]];
-      } else {
-        return null;
-      }
+function template(fn) {
+  return fn.toString().replace(/\n/g, '').match(/\/\*(.*?)\*\//)[1];
+}
+
+function templateCompile(template, props) {
+  /* handle conditionals */
+  template = template.replace(/\[(.+?)\?(.*?)\]/g, function(str, prop, tmpl) {
+    return getProp(props, prop) ? tmpl : '';
+  });
+  /* handle substitutions */
+  template = template.replace(/\{(.+?)\}/g, function(str, prop) {
+    return getProp(props, prop);
+  });
+  return template;
+}
+
+function getProp(obj, prop) {
+  var propChain = prop.split('.');
+  var val = obj;
+  for (var i = 0, len = propChain.length; i < len; i++) {
+    var newVal = val[propChain[i]];
+    if (newVal) {
+      val = val[propChain[i]];
+    } else {
+      return null;
     }
-    return val;
   }
-})();
+  return val;
+}

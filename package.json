@@ -1,0 +1,26 @@
+{
+  "name": "npr-music-we-love-bookmarklets",
+  "version": "1.0.0",
+  "description": "A suite of bookmarklets to heart/hate tracks on NPR Music We Love 2014 app",
+  "scripts": {
+    "build": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DingoEatingFuzz/npr-music-we-love-bookmarklets.git"
+  },
+  "keywords": [
+    "bookmarklets",
+    "npr"
+  ],
+  "author": "Michael Lange",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DingoEatingFuzz/npr-music-we-love-bookmarklets/issues"
+  },
+  "homepage": "http://mlange.io/npr",
+  "devDependencies": {
+    "mustache": "^1.0.0",
+    "q": "^1.1.2"
+  }
+}

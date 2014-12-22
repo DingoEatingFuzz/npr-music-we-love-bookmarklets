@@ -1,0 +1,14 @@
+<style>
+  body { font-family: sans-serif; background: #19262f; }
+  h1 { color: white;}
+  a, a:hover, a:focus { color: #E2574B }
+  ol { list-style: none; border-left: 2px solid rgba(255, 255, 255, 0.3); padding: 10px; margin: 10px; }
+  li { padding: 10px; }
+</style>
+<h1>NPR Songs We Love 2014 Bookmarklets</h1>
+<ol>
+  {{#bookmarklets}}
+    <li><a href="{{code}}">{{name}}</a></li>
+  {{/bookmarklets}}
+</ol>
+
